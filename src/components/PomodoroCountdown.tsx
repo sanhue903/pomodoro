@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface BreakButtonProps {
   children: string;
@@ -12,30 +12,45 @@ function BreakButton(props: BreakButtonProps) {
   return <button onClick={() => onClick(time)}> {children} </button>;
 }
 
-interface PlayPauseButtonProps {
-  children: string;
-  onClick: React.Dispatch<React.SetStateAction<number>>;
+interface TimerProps {
+  time: number;
 }
+function Timer(props: TimerProps) {
+  const { time } = props;
+  const minutes: number = Math.trunc(time / 60);
+  const seconds: number = time % 60;
 
-function PlayButton(props: PlayPauseButtonProps) {
-  const { children, onClick } = props;
+  function toText(time: number) {
+    const text: string = String(time);
+    return time > 10 ? text : "0" + text;
+  }
 
-  return <button>{children}</button>;
+  return <h1>{`${toText(minutes)} : ${toText(seconds)}`}</h1>;
 }
 
 function PomodoroCountdown() {
   const [secondsRemaining, setSecondsRemaining] = useState(60 * 25);
   const [countdownStarted, setCountdownStarded] = useState(false);
 
+  useEffect(() => {
+    if (secondsRemaining > 0 && countdownStarted) {
+      const ID = setInterval(
+        () => setSecondsRemaining(secondsRemaining - 1),
+        1000
+      );
+      return () => clearInterval(ID);
+    }
+  }, [secondsRemaining, countdownStarted]);
+
   return (
     <main>
-      <h1>{secondsRemaining}</h1>
+      <Timer time={secondsRemaining} />
       {countdownStarted ? (
         <button onClick={() => setCountdownStarded(false)}> pausar</button>
       ) : (
         <button onClick={() => setCountdownStarded(true)}>play</button>
       )}
-      <BreakButton onClick={(time) => setSecondsRemaining(time)} time={300}>
+      <BreakButton onClick={(time) => setSecondsRemaining(time)} time={65}>
         short break
       </BreakButton>
       <BreakButton onClick={(time) => setSecondsRemaining(time)} time={900}>
