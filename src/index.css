@@ -1,0 +1,36 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+}
+
+.countdown-modes {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mode-button {
+  padding: 5px 15px;
+  margin: 10px;
+}
+
+main {
+  header {
+    display: flex;
+    justify-content: center;
+  }
+
+  section {
+    display: flex;
+    justify-content: center;
+  }
+  footer {
+    display: flex;
+    justify-content: center;
+  }
+}

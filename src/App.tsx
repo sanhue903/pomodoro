@@ -1,10 +1,11 @@
 import { useState, useRef } from "react";
 import Timer from "./components/Timer";
+import ModeButton from "./components/ModeButton";
 
 const countdownModes = {
   Work: "work",
-  ShortBreak: "shortBreak",
-  LongBreak: "longBreak",
+  ShortBreak: "short break",
+  LongBreak: "long break",
 };
 
 type countdownModes = (typeof countdownModes)[keyof typeof countdownModes];
@@ -55,20 +56,27 @@ function App() {
 
   return (
     <main>
-      <Timer time={secondsRemaining} />
-      <h2>{countdownMode}</h2>
-      <button onClick={handleChangeCountdownState}>
-        {isPaused ? "play" : "pausar"}
-      </button>
-      <button onClick={() => handleChangeMode(countdownModes.Work)}>
-        pomodoro
-      </button>
-      <button onClick={() => handleChangeMode(countdownModes.ShortBreak)}>
-        pausa corta
-      </button>
-      <button onClick={() => handleChangeMode(countdownModes.LongBreak)}>
-        pausa larga
-      </button>
+      <header>
+        <ModeButton OnClick={() => handleChangeMode(countdownModes.Work)}>
+          Pomodoro
+        </ModeButton>
+        <ModeButton OnClick={() => handleChangeMode(countdownModes.ShortBreak)}>
+          Pausa corta
+        </ModeButton>
+        <ModeButton OnClick={() => handleChangeMode(countdownModes.LongBreak)}>
+          Pausa larga
+        </ModeButton>
+      </header>
+
+      <section>
+        <p>{countdownMode}</p>
+        <Timer time={secondsRemaining} />
+      </section>
+      <footer>
+        <button onClick={handleChangeCountdownState}>
+          {isPaused ? "play" : "pausar"}
+        </button>
+      </footer>
     </main>
   );
 }
