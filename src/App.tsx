@@ -69,7 +69,7 @@ function App() {
       </header>
 
       <section>
-        <p>{countdownMode}</p>
+        <h2>{countdownMode}</h2>
         <Timer time={secondsRemaining} />
       </section>
       <footer>
